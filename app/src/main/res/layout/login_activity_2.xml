@@ -56,7 +56,7 @@
                 android:drawablePadding="@dimen/drw_padding_ediText"
                 android:hint="@string/username"
                 android:maxLines="1"
-                android:inputType="textEmailAddress"
+                android:inputType="text"
                 android:imeOptions="actionNext"/>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -65,21 +65,23 @@
                 app:hintTextColor="@color/red">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txt_email"
                     style="@style/editText"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/btn_height_normal"
                     android:layout_margin="15dp"
                     android:hint="@string/username"
-                    android:inputType="text"
+                    android:inputType="textEmailAddress"
                     android:drawableLeft="@drawable/baseline_account_circle_24"
                     android:drawableTint="@color/red"
                     android:drawablePadding="@dimen/drw_padding_ediText"
                     android:maxLines="1"
-                    android:imeOptions="actionDone"/>
+                    android:imeOptions="actionNext"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <EditText
+                android:id="@+id/txt_password"
                 style="@style/editText"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/btn_height_normal"
@@ -88,6 +90,8 @@
                 android:drawableTint="@color/blue"
                 android:drawablePadding="@dimen/drw_padding_ediText"
                 android:text="@string/password"
+                android:maxLines="1"
+                android:inputType="textPassword"
                 android:imeOptions="actionGo"/>
 
             <Button
