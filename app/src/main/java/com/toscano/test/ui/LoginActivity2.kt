@@ -43,11 +43,11 @@ class LoginActivity2 : AppCompatActivity() {
 
             else{
                 //Intent Implicito
-                val intentImp = Intent()
-                intentImp.action = Intent.ACTION_SEND
-                intentImp.putExtra(Intent.EXTRA_TEXT, "Mi primera chamba")
-                intentImp.type = "text/plain"
-                startActivity(intentImp)
+                // val intentImp = Intent()
+                // intentImp.action = Intent.ACTION_SEND
+                // intentImp.putExtra(Intent.EXTRA_TEXT, "Mi primera chamba")
+                // intentImp.type = "text/plain"
+                // startActivity(intentImp)
 
                 //Intent Explicito
                 val intentExp = Intent(this,MainActivity::class.java)
