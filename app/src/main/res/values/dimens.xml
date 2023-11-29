@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="text_normal_size">22sp</dimen>
+    <dimen name="btn_height_normal">60dp</dimen>
+
+    <dimen name="drw_padding_ediText">10dp</dimen>
+</resources>
