@@ -1,4 +1,4 @@
-package com.toscano.test.ui
+package com.toscano.test.ui.activities
 
 import android.os.Bundle
 import android.widget.Button

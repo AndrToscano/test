@@ -1,4 +1,4 @@
-package com.toscano.test.ui
+package com.toscano.test.ui.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -30,4 +30,5 @@ class MainActivity : AppCompatActivity() {
         // this is a value which is your current public IP address, null if no/lost internet connection
         })
     }
+
 }

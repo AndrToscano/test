@@ -7,7 +7,7 @@
     android:background="@color/dim_gray"
     android:orientation="vertical"
     android:id="@+id/layout_login_2_root"
-    tools:context=".ui.LoginActivity2">
+    tools:context=".ui.activities.LoginActivity2">
 
     <LinearLayout
         android:layout_width="match_parent"
