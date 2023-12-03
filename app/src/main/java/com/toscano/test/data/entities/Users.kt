@@ -2,12 +2,16 @@ package com.toscano.test.data.entities
 
 import android.adservices.adid.AdId
 import android.security.identity.AccessControlProfile
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
+@Entity
 data class Users(
                  var userName: String? = null,
                  var password: String? = null)
 
 {
+    @PrimaryKey(autoGenerate = true)
     var userId : Int = -1
     var firstName : String = "Usuario Desconocido"
     var lastName : String = "Usuario Desconocido"
