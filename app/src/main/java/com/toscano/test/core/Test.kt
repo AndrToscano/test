@@ -10,9 +10,10 @@ class Test : Application() {
     //var con : DBConnection? = null
     override fun onCreate() {
         super.onCreate()
-
+        /*
         con = DBConnection().getConnection(applicationContext)
         SignIn(con).insertUsers()
+         */
     }
 
     override fun onLowMemory() {

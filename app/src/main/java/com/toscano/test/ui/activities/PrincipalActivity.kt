@@ -8,6 +8,8 @@ import com.toscano.test.core.Test
 import com.toscano.test.databinding.ActivityMainBinding
 import com.toscano.test.databinding.ActivityPrincipalBinding
 import com.toscano.test.logic.login.SignIn
+import com.toscano.test.ui.activities.fragments.FavoritesFragment
+import com.toscano.test.ui.activities.fragments.ListFragment
 import com.toscano.test.ui.core.Constants
 
 class PrincipalActivity : AppCompatActivity() {
@@ -18,6 +20,7 @@ class PrincipalActivity : AppCompatActivity() {
         binding = ActivityPrincipalBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        /*
         intent.extras.let {
 
             //Clase
@@ -42,6 +45,44 @@ class PrincipalActivity : AppCompatActivity() {
             }
             else{
                 Snackbar.make(binding.txtUser,"Ocurrio un error",Snackbar.LENGTH_LONG).show()
+            }
+        }
+        */
+
+        //1. Instanciar el Fragment
+        val listFragment = ListFragment()
+        val favoritesFragment = FavoritesFragment()
+
+        /*
+        //2. Instanciar un Transaction
+        val transaction = supportFragmentManager.beginTransaction()
+
+
+        //3. Reemplazar con la variable Fragment
+        transaction.replace(binding.frameContainer.id, listFragment)
+        //transaction.replace(binding.frameContainer1.id, favoritesFragment)
+
+        //4. Commit
+        transaction.commit()
+         */
+
+        binding.bottomNavigation.setOnItemSelectedListener { item ->
+            when(item.itemId) {
+                R.id.item_list -> {
+                    // Respond to navigation item 1 click
+                    val transaction = supportFragmentManager.beginTransaction()
+                    transaction.replace(binding.frameContainer.id, listFragment)
+                    transaction.commit()
+                    true
+                }
+                R.id.item_fav -> {
+                    // Respond to navigation item 2 click
+                    val transaction = supportFragmentManager.beginTransaction()
+                    transaction.replace(binding.frameContainer.id, favoritesFragment)
+                    transaction.commit()
+                    true
+                }
+                else -> false
             }
         }
     }
