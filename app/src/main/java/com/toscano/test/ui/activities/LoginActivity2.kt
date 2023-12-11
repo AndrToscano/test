@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import com.toscano.test.core.Test
 import com.toscano.test.databinding.LoginActivity2Binding
 import com.toscano.test.logic.login.SignIn
 import com.toscano.test.ui.core.Constants
@@ -11,7 +12,7 @@ import com.toscano.test.ui.core.Constants
 class LoginActivity2 : AppCompatActivity() {
 
     private lateinit var binding: LoginActivity2Binding
-    private val signIn : SignIn = SignIn()
+    private val signIn : SignIn = SignIn(Test.getConnectionDB()!!)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //Binding
@@ -65,7 +66,7 @@ private fun initControls(){
     private fun initListeners(){
         binding.btnLogin.setOnClickListener{
 
-            val check = SignIn().checkUserAndPassword(
+            val check = SignIn(Test.getConnectionDB()!!).checkUserAndPassword(
                 binding.txtUsername.text.toString(),
                 binding.txtPassword.text.toString()
             )

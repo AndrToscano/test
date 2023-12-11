@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import com.toscano.test.R
+import com.toscano.test.core.Test
 import com.toscano.test.databinding.ActivityMainBinding
 import com.toscano.test.databinding.ActivityPrincipalBinding
 import com.toscano.test.logic.login.SignIn
@@ -19,11 +20,24 @@ class PrincipalActivity : AppCompatActivity() {
 
         intent.extras.let {
 
+            //Clase
+            /*
+            Test().con
+             */
+
+            //Objeto
+            /*
+            Test.con
+             */
+
+            //1era Forma - Objeto
+            Test.getConnectionDB()!!.getUsersDAO().getOneUser(1)
+
             val userID = it?.getInt(Constants.USER_ID)
 
             if (userID != null ) {
 
-                val user = SignIn().getUserName(userID)
+                val user = SignIn(Test.getConnectionDB()!!).getUserName(userID)
                 binding.txtUser.text = user.firstName.toString()
             }
             else{
