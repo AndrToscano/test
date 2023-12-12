@@ -4,16 +4,27 @@ import android.app.Application
 import com.toscano.test.data.repository.DBConnection
 import com.toscano.test.data.repository.DBRepository
 import com.toscano.test.logic.login.SignIn
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class Test : Application() {
 
     //var con : DBConnection? = null
     override fun onCreate() {
         super.onCreate()
-        /*
+
+        //Realizacion de Corrutinas
+
+        //1. Creacion de un ambiente
+        //2. dsipatchers
+        //3. La funcion launch
         con = DBConnection().getConnection(applicationContext)
-        SignIn(con).insertUsers()
-         */
+
+        GlobalScope.launch(Dispatchers.IO){
+
+            SignIn(con).insertUsers()
+        }
     }
 
     override fun onLowMemory() {

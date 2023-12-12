@@ -2,6 +2,7 @@ package com.toscano.test.ui.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.toscano.test.R
 import com.toscano.test.core.Test
@@ -11,6 +12,12 @@ import com.toscano.test.logic.login.SignIn
 import com.toscano.test.ui.activities.fragments.FavoritesFragment
 import com.toscano.test.ui.activities.fragments.ListFragment
 import com.toscano.test.ui.core.Constants
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class PrincipalActivity : AppCompatActivity() {
 
@@ -82,8 +89,47 @@ class PrincipalActivity : AppCompatActivity() {
                     transaction.commit()
                     true
                 }
-                else -> false
+                else -> {
+                    //Ambiente en el que el Activity cumple un ciclo de vida
+                    //Visualizara los datos del Usuario
+                    lifecycleScope.launch(Dispatchers.Main) {
+
+                        //Generara cambios en la Base de Datos
+                        val name = withContext(Dispatchers.IO){
+
+                            val a = "Juan"
+                            val b = a + " Toscano"
+                            b//Se devolvera lo unico que se toma
+                        }
+
+                        // Ejecucion de las corrtuinas - Se ejecutan a la vez
+                        val listC = listOf<Deferred<String>>(
+                            async {getName()},
+                            async {getName()},
+                            async {getName()}
+                        )
+
+
+
+                        //Se recoge las diferetes corrutinas a ejecucion
+                        //val w = awaitAll(listaC)
+
+                        //Generara cambios en la Base de Datos
+                        val name1 = withContext(Dispatchers.IO){
+
+                            getName()
+                        }
+                        binding.txtUser.text = name.toString()
+                    }
+                    false
+                }
             }
         }
+    }
+
+    suspend fun getName () :String{
+        val a = "Juan"
+        val b = a + " Toscano"
+        return b
     }
 }
