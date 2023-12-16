@@ -2,6 +2,7 @@ package com.toscano.test.ui.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.toscano.test.R
@@ -26,6 +27,12 @@ class PrincipalActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPrincipalBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        correr()
+        initFragments()
+
+        //Llama a la Base de Datos
+        checkDataBase()
 
         /*
         intent.extras.let {
@@ -56,6 +63,11 @@ class PrincipalActivity : AppCompatActivity() {
         }
         */
 
+
+    }
+
+    private fun initFragments(){
+
         //1. Instanciar el Fragment
         val listFragment = ListFragment()
         val favoritesFragment = FavoritesFragment()
@@ -74,59 +86,94 @@ class PrincipalActivity : AppCompatActivity() {
          */
 
         binding.bottomNavigation.setOnItemSelectedListener { item ->
+
+            //variable Manager
+            val manager = supportFragmentManager
+
             when(item.itemId) {
                 R.id.item_list -> {
                     // Respond to navigation item 1 click
-                    val transaction = supportFragmentManager.beginTransaction()
+                    val transaction = manager.beginTransaction()
                     transaction.replace(binding.frameContainer.id, listFragment)
                     transaction.commit()
                     true
                 }
                 R.id.item_fav -> {
                     // Respond to navigation item 2 click
-                    val transaction = supportFragmentManager.beginTransaction()
+                    val transaction = manager.beginTransaction()
                     transaction.replace(binding.frameContainer.id, favoritesFragment)
                     transaction.commit()
                     true
                 }
                 else -> {
-                    //Ambiente en el que el Activity cumple un ciclo de vida
-                    //Visualizara los datos del Usuario
-                    lifecycleScope.launch(Dispatchers.Main) {
-
-                        //Generara cambios en la Base de Datos
-                        val name = withContext(Dispatchers.IO){
-
-                            val a = "Juan"
-                            val b = a + " Toscano"
-                            b//Se devolvera lo unico que se toma
-                        }
-
-                        // Ejecucion de las corrtuinas - Se ejecutan a la vez
-                        val listC = listOf<Deferred<String>>(
-                            async {getName()},
-                            async {getName()},
-                            async {getName()}
-                        )
-
-
-
-                        //Se recoge las diferetes corrutinas a ejecucion
-                        //val w = awaitAll(listaC)
-
-                        //Generara cambios en la Base de Datos
-                        val name1 = withContext(Dispatchers.IO){
-
-                            getName()
-                        }
-                        binding.txtUser.text = name.toString()
-                    }
                     false
                 }
             }
         }
     }
 
+    private fun correr(){
+        //Ambiente en el que el Activity cumple un ciclo de vida
+        //Visualizara los datos del Usuario
+        lifecycleScope.launch(Dispatchers.Main) {
+
+            //Generara cambios en la Base de Datos
+            val name = withContext(Dispatchers.IO){
+
+                val a = "Juan"
+                val b = a + " Toscano"
+                b//Se devolvera lo unico que se toma
+
+            }
+
+            val w = withContext(Dispatchers.Default){
+
+                // Ejecucion de las corrtuinas - Se ejecutan a la vez
+                val listC = listOf(
+                    async {getName()},
+                    async {getName()},
+                    async {getName()}
+                )
+
+                //Se recoge las diferetes corrutinas a ejecucion
+                val w1 = listC.awaitAll()
+            }
+
+
+
+            //Generara cambios en la Base de Datos
+            val name1 = withContext(Dispatchers.IO){
+
+                getName()
+            }
+            binding.txtUser.text = name1
+        }
+    }
+
+    private fun checkDataBase(){
+
+        /*
+        //Del Main a un hilo secundario
+        lifecycleScope.launch(Dispatchers.Main) {
+            withContext(Dispatchers.IO){
+                //Se crea una instancia, se inyecta la dependencia y llama a los usuarios
+                val usrs =SignIn(Test.getConnectionDB()!!).getAllUsers()
+            }
+        }
+         */
+
+
+        // De un hilo secuandario al Main
+        lifecycleScope.launch(Dispatchers.IO) {
+            val usrs =SignIn(Test.getConnectionDB()!!).getAllUsers()
+
+            withContext(Dispatchers.Main){
+                usrs
+            }
+            Log.d(Constants.TAG, usrs.toString())
+        }
+
+    }
     suspend fun getName () :String{
         val a = "Juan"
         val b = a + " Toscano"

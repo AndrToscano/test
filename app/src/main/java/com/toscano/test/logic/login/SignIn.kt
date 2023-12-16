@@ -10,7 +10,7 @@ import com.toscano.test.data.repository.DBUsers
 import com.toscano.test.ui.core.Constants
 import java.sql.Connection
 
-class SignIn (val connection: DBRepository){
+class SignIn (val connection: DBRepository) {
 
     //Tipo Parametro
     /*
@@ -28,7 +28,7 @@ class SignIn (val connection: DBRepository){
 
      */
 
-    fun checkUserAndPassword(username: String, password: String): Int{
+    fun checkUserAndPassword(username: String, password: String): Int {
 
         val users = DBUsers().getListUsers()
         //Integer
@@ -38,7 +38,7 @@ class SignIn (val connection: DBRepository){
             it.password == password && it.userName == username
         }
 
-        if (listUsers.isNotEmpty()){
+        if (listUsers.isNotEmpty()) {
             ret = listUsers.first().userId
         }
         return ret
@@ -61,7 +61,7 @@ class SignIn (val connection: DBRepository){
      */
 
     //Funcion Lineal
-    fun getUserName(userId: Int) : Users = DBUsers().getListUsers().first{ it.userId == userId }
+    suspend fun getUserName(userId: Int): Users = DBUsers().getListUsers().first { it.userId == userId }
 
     //Funcion {}
     /*
@@ -85,7 +85,7 @@ class SignIn (val connection: DBRepository){
      */
 
     //Funcion Lineal
-    fun getUserName1 (userId: Int): Users = connection.getUsersDAO().getOneUser(userId)
+    fun getUserName1(userId: Int): Users = connection.getUsersDAO().getOneUser(userId)
 
     //Funcion {}
     /*
@@ -100,11 +100,22 @@ class SignIn (val connection: DBRepository){
      */
 
     //Funcion Lineal
-    fun insertUsers() =
+    suspend fun insertUsers() =
         if (connection.getUsersDAO().getAllUsers().isEmpty()) {
             connection.getUsersDAO().insertUsers(DBUsers().getListUsers())
+        } else {
+            null
         }
-    else{
 
-        }
+    //Funcion {}
+    /*
+    fun getAllUsers() : List<Users>{
+
+        return connection.getUsersDAO().getAllUsers()
+    }
+     */
+
+    //Funcion Lineal
+    suspend fun getAllUsers(): List<Users> = connection.getUsersDAO().getAllUsers()
+
 }
