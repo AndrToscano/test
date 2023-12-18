@@ -4,14 +4,17 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.toscano.test.R
 import com.toscano.test.core.Test
+import com.toscano.test.data.entities.Users
 import com.toscano.test.databinding.ActivityMainBinding
 import com.toscano.test.databinding.ActivityPrincipalBinding
 import com.toscano.test.logic.login.SignIn
 import com.toscano.test.ui.activities.fragments.FavoritesFragment
 import com.toscano.test.ui.activities.fragments.ListFragment
+import com.toscano.test.ui.adapters.UsersAdapter
 import com.toscano.test.ui.core.Constants
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
@@ -33,6 +36,8 @@ class PrincipalActivity : AppCompatActivity() {
 
         //Llama a la Base de Datos
         checkDataBase()
+
+        initRecyclerView()
 
         /*
         intent.extras.let {
@@ -162,10 +167,20 @@ class PrincipalActivity : AppCompatActivity() {
         }
          */
 
+        /*
+        // Base de Datos - Nueva modificacion
+        lifecycleScope.launch(Dispatchers.Main) {
+            val usrs = withContext(Dispatchers.IO){
+                getUsersList()
+            }
+            Log.d(Constants.TAG, usrs.toString())
+        }
+         */
+
 
         // De un hilo secuandario al Main
         lifecycleScope.launch(Dispatchers.IO) {
-            val usrs =SignIn(Test.getConnectionDB()!!).getAllUsers()
+            val usrs = SignIn(Test.getConnectionDB()!!).getAllUsers()
 
             withContext(Dispatchers.Main){
                 usrs
@@ -178,5 +193,23 @@ class PrincipalActivity : AppCompatActivity() {
         val a = "Juan"
         val b = a + " Toscano"
         return b
+    }
+
+    private fun initRecyclerView(){
+
+        lifecycleScope.launch {
+            val usrs = withContext(Dispatchers.IO){
+                getUsersList()
+            }
+            //Instanciar el adapter
+            val adapter : UsersAdapter = UsersAdapter(usrs)
+            binding.rvUsers.adapter = adapter
+            binding.rvUsers.layoutManager = LinearLayoutManager(this@PrincipalActivity, LinearLayoutManager.VERTICAL, false)
+        }
+    }
+
+    //Consulta sin Corrutinas
+    suspend private fun getUsersList() : List<Users>{
+        return SignIn(Test.getConnectionDB()!!).getAllUsers()
     }
 }
