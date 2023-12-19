@@ -4,11 +4,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.toscano.test.R
 import com.toscano.test.data.entities.Users
 import com.toscano.test.databinding.UserLayoutItemsBinding
 
-class UsersAdapter (val listUsers: List<Users>) : RecyclerView.Adapter<UsersAdapter.ViewHolderUsers>() {
+class UsersAdapter ( private val listUsers: List<Users>) : RecyclerView.Adapter<UsersAdapter.ViewHolderUsers>() {
 
     //Creamos una CLase ViewHolder
     class ViewHolderUsers(view: View) : RecyclerView.ViewHolder(view){
@@ -20,6 +21,10 @@ class UsersAdapter (val listUsers: List<Users>) : RecyclerView.Adapter<UsersAdap
         fun render (item: Users) {
 
             //Ingreso de datos que se implementaran en la Interfaz
+            binding.imageView.load("https://www.iconpacks.net/icons/2/free-user-icon-3297-thumb.png"){
+                placeholder(R.drawable.avatar)
+                crossfade(true)
+            }
             binding.txtId.text = item.userId.toString()
             binding.txtName.text = item.firstName.toString()
             binding.txtLastName.text = item.lastName.toString()

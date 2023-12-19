@@ -3,6 +3,7 @@ package com.toscano.test.ui.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -20,6 +21,7 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -197,7 +199,8 @@ class PrincipalActivity : AppCompatActivity() {
 
     private fun initRecyclerView(){
 
-        lifecycleScope.launch {
+        lifecycleScope.launch(Dispatchers.Main) {
+            binding.animationView.visibility = View.VISIBLE
             val usrs = withContext(Dispatchers.IO){
                 getUsersList()
             }
@@ -205,11 +208,15 @@ class PrincipalActivity : AppCompatActivity() {
             val adapter : UsersAdapter = UsersAdapter(usrs)
             binding.rvUsers.adapter = adapter
             binding.rvUsers.layoutManager = LinearLayoutManager(this@PrincipalActivity, LinearLayoutManager.VERTICAL, false)
+            binding.animationView.visibility = View.GONE
         }
     }
 
     //Consulta sin Corrutinas
     suspend private fun getUsersList() : List<Users>{
+
+        //Retardo para Carga
+        delay(7000)
         return SignIn(Test.getConnectionDB()!!).getAllUsers()
     }
 }
