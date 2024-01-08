@@ -1,4 +1,4 @@
-package com.toscano.test.data.entities
+package com.toscano.test.data.local.entities
 
 import android.adservices.adid.AdId
 import android.security.identity.AccessControlProfile

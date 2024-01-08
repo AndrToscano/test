@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.toscano.test.R
-import com.toscano.test.data.entities.Users
+import com.toscano.test.data.local.entities.Users
 import com.toscano.test.databinding.UserLayoutItemsBinding
 
 class UsersAdapter ( private val listUsers: List<Users>) : RecyclerView.Adapter<UsersAdapter.ViewHolderUsers>() {

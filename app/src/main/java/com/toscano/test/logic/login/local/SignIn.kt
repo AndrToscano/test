@@ -1,14 +1,8 @@
-package com.toscano.test.logic.login
+package com.toscano.test.logic.login.local
 
-import android.adservices.adid.AdId
-import android.content.Context
-import android.util.Log
-import com.toscano.test.data.entities.Users
-import com.toscano.test.data.repository.DBConnection
-import com.toscano.test.data.repository.DBRepository
-import com.toscano.test.data.repository.DBUsers
-import com.toscano.test.ui.core.Constants
-import java.sql.Connection
+import com.toscano.test.data.local.entities.Users
+import com.toscano.test.data.local.repository.DBRepository
+import com.toscano.test.data.local.repository.DBUsers
 
 class SignIn (val connection: DBRepository) {
 

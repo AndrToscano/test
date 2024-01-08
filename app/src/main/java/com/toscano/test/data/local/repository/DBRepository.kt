@@ -1,11 +1,11 @@
-package com.toscano.test.data.repository
+package com.toscano.test.data.local.repository
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.toscano.test.data.dao.UsersDAO
-import com.toscano.test.data.entities.Users
+import com.toscano.test.data.local.dao.UsersDAO
+import com.toscano.test.data.local.entities.Users
 
 @Database(entities = [Users::class], version = 1)
 

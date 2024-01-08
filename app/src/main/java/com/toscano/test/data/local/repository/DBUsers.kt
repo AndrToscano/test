@@ -1,6 +1,6 @@
-package com.toscano.test.data.repository
+package com.toscano.test.data.local.repository
 
-import com.toscano.test.data.entities.Users
+import com.toscano.test.data.local.entities.Users
 
 class DBUsers {
 

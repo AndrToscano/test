@@ -1,10 +1,10 @@
-package com.toscano.test.data.dao
+package com.toscano.test.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.toscano.test.data.entities.Users
+import com.toscano.test.data.local.entities.Users
 
 @Dao
 interface UsersDAO {

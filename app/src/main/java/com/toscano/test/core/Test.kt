@@ -1,9 +1,9 @@
 package com.toscano.test.core
 
 import android.app.Application
-import com.toscano.test.data.repository.DBConnection
-import com.toscano.test.data.repository.DBRepository
-import com.toscano.test.logic.login.SignIn
+import com.toscano.test.data.local.repository.DBConnection
+import com.toscano.test.data.local.repository.DBRepository
+import com.toscano.test.logic.login.local.SignIn
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

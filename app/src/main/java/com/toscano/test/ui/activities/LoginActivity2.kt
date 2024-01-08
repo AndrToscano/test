@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.toscano.test.core.Test
 import com.toscano.test.databinding.LoginActivity2Binding
-import com.toscano.test.logic.login.SignIn
+import com.toscano.test.logic.login.local.SignIn
 import com.toscano.test.ui.core.Constants
 
 class LoginActivity2 : AppCompatActivity() {
