@@ -1,4 +1,4 @@
-package com.toscano.test.data.network.endpoints
+package com.toscano.test.data.network.repository
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

@@ -1,14 +1,16 @@
 package com.toscano.test.logic.login.jikan
 
 import android.util.Log
+import com.toscano.test.core.getFullInfoAnimeLG
 import com.toscano.test.data.network.endpoints.AnimeEndPoint
-import com.toscano.test.data.network.endpoints.RetrofitBase
-import com.toscano.test.logic.login.jikan.entities.FullInfoAnimeLG
+import com.toscano.test.data.network.repository.RetrofitBase
+import com.toscano.test.logic.entities.FullInfoAnimeLG
 import com.toscano.test.ui.core.Constants
 
 class JikanAnimeUserCase {
 
-    fun getFullAnimeInfo(nameAnime : Int): FullInfoAnimeLG{
+    operator fun invoke(nameAnime : Int): FullInfoAnimeLG {
+
 
         val baseService = RetrofitBase.getRetrofitJikanConncetion()
 
@@ -16,14 +18,13 @@ class JikanAnimeUserCase {
 
         val callService = service.getAnimeFullInfo(nameAnime)
 
-        val infoAnime = FullInfoAnimeLG()
+        var infoAnime = FullInfoAnimeLG()
 
         if (callService.isSuccessful){
 
-            infoAnime.id = callService.body()!!.data.mal_id
-            infoAnime.name = callService.body()!!.data.title_english
-            infoAnime.small_image = callService.body()!!.data.images.jpg.small_image_url
-            infoAnime.big_image = callService.body()!!.data.images.jpg.large_image_url
+            val a = callService.body()!!
+            infoAnime = a.getFullInfoAnimeLG()
+
         }
         else{
             Log.d(Constants.TAG, "Error al llamado de la API de Jikan")
@@ -31,4 +32,10 @@ class JikanAnimeUserCase {
 
         return infoAnime
     }
+    /*
+    fun getAllTopsAnimes(){
+        return "Listados de Animes"
+    }
+     */
+
 }

@@ -10,6 +10,7 @@ import com.toscano.test.R
 import com.toscano.test.core.Test
 import com.toscano.test.data.local.entities.Users
 import com.toscano.test.databinding.ActivityPrincipalBinding
+import com.toscano.test.logic.login.jikan.JikanAnimeUserCase
 import com.toscano.test.logic.login.local.SignIn
 import com.toscano.test.ui.activities.fragments.FavoritesFragment
 import com.toscano.test.ui.activities.fragments.ListFragment
@@ -38,6 +39,7 @@ class PrincipalActivity : AppCompatActivity() {
 
         initRecyclerView()
 
+        val a = JikanAnimeUserCase()
         /*
         intent.extras.let {
 
