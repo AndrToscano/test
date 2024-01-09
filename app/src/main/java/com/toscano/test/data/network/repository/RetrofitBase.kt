@@ -9,6 +9,6 @@ object RetrofitBase {
     fun getRetrofitJikanConncetion(): Retrofit{
 
         //Realizacion de la conexion de nuestra API
-        return Retrofit.Builder().baseUrl(JIKAN_URL).addConverterFactory(GsonConverterFactory.create()).build()
+        return Retrofit.Builder().baseUrl("https://api.jikan.moe/v4/").addConverterFactory(GsonConverterFactory.create()).build()
     }
 }

@@ -11,6 +11,7 @@ import com.toscano.test.core.Test
 import com.toscano.test.data.local.entities.Users
 import com.toscano.test.databinding.ActivityPrincipalBinding
 import com.toscano.test.logic.login.jikan.JikanAnimeUserCase
+import com.toscano.test.logic.login.jikan.JikanGetTopAnimesUserCase
 import com.toscano.test.logic.login.local.SignIn
 import com.toscano.test.ui.activities.fragments.FavoritesFragment
 import com.toscano.test.ui.activities.fragments.ListFragment
@@ -39,7 +40,7 @@ class PrincipalActivity : AppCompatActivity() {
 
         initRecyclerView()
 
-        val a = JikanAnimeUserCase()
+        getAllTopAnimes()
         /*
         intent.extras.let {
 
@@ -218,4 +219,14 @@ class PrincipalActivity : AppCompatActivity() {
         delay(7000)
         return SignIn(Test.getConnectionDB()!!).getAllUsers()
     }
+
+    //Llamado de Casos de Uso
+    private  fun getAllTopAnimes(){
+        lifecycleScope.launch(Dispatchers.IO) {
+           val x = JikanGetTopAnimesUserCase().getResponse()
+            Log.d(Constants.TAG, x.pagination.toString())
+        }
+    }
+
+
 }

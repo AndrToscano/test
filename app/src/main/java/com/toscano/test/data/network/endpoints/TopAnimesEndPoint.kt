@@ -6,5 +6,5 @@ import retrofit2.http.GET
 
 interface TopAnimesEndPoint {
     @GET("top/anime")
-    fun getAllTopAnimes() : Response<List<TopAnimes>>
+    suspend fun getAllTopAnimes() : Response<TopAnimes>
 }

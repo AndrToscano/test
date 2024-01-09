@@ -12,30 +12,32 @@ class JikanAnimeUserCase {
     operator fun invoke(nameAnime : Int): FullInfoAnimeLG {
 
 
-        val baseService = RetrofitBase.getRetrofitJikanConncetion()
-
-        val service  = baseService.create(AnimeEndPoint::class.java)
-
-        val callService = service.getAnimeFullInfo(nameAnime)
-
         var infoAnime = FullInfoAnimeLG()
+        try {
+            val baseService = RetrofitBase.getRetrofitJikanConncetion()
 
-        if (callService.isSuccessful){
+            val service = baseService.create(AnimeEndPoint::class.java)
 
-            val a = callService.body()!!
-            infoAnime = a.getFullInfoAnimeLG()
+            val callService = service.getAnimeFullInfo(nameAnime)
+
+
+            if (callService.isSuccessful) {
+
+                val a = callService.body()!!
+                infoAnime = a.getFullInfoAnimeLG()
+
+            }
+
+            else{
+                Log.d(Constants.TAG, "Error al llamado de la API de Jikan")
+            }
 
         }
-        else{
-            Log.d(Constants.TAG, "Error al llamado de la API de Jikan")
+
+        catch(ex: Exception) {
+            Log.d(Constants.TAG, ex.stackTraceToString())
         }
 
         return infoAnime
     }
-    /*
-    fun getAllTopsAnimes(){
-        return "Listados de Animes"
-    }
-     */
-
 }
