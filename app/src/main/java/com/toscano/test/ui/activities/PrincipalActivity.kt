@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.toscano.test.R
@@ -15,6 +16,7 @@ import com.toscano.test.logic.login.jikan.JikanGetTopAnimesUserCase
 import com.toscano.test.logic.login.local.SignIn
 import com.toscano.test.ui.activities.fragments.FavoritesFragment
 import com.toscano.test.ui.activities.fragments.ListFragment
+import com.toscano.test.ui.adapters.AnimeAdapter
 import com.toscano.test.ui.adapters.UsersAdapter
 import com.toscano.test.ui.core.Constants
 import kotlinx.coroutines.Dispatchers
@@ -26,7 +28,9 @@ import kotlinx.coroutines.withContext
 
 class PrincipalActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityPrincipalBinding
+    private lateinit var binding : ActivityPrincipalBinding
+    private lateinit var animeAdapter : AnimeAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPrincipalBinding.inflate(layoutInflater)
@@ -38,8 +42,9 @@ class PrincipalActivity : AppCompatActivity() {
         //Llama a la Base de Datos
         checkDataBase()
 
-        initRecyclerView()
+        //initRecyclerView()
 
+        initRecyclerView1()
         getAllTopAnimes()
         /*
         intent.extras.let {
@@ -91,6 +96,17 @@ class PrincipalActivity : AppCompatActivity() {
         //4. Commit
         transaction.commit()
          */
+
+        //Tiempo en que el swipe se actualiza
+        binding.swiperv.setOnRefreshListener {
+
+            val adapter = AnimeAdapter(listOf())
+            binding.rvUsers.adapter = adapter
+            binding.rvUsers.layoutManager = LinearLayoutManager(this@PrincipalActivity, LinearLayoutManager.VERTICAL, false)
+
+            initRecyclerView1()
+            binding.swiperv.isRefreshing = false
+        }
 
         binding.bottomNavigation.setOnItemSelectedListener { item ->
 
@@ -197,6 +213,32 @@ class PrincipalActivity : AppCompatActivity() {
         return b
     }
 
+
+    private fun initRecyclerView1(){
+
+        lifecycleScope.launch(Dispatchers.Main) {
+            binding.animationView.visibility = View.VISIBLE
+            val jikan = JikanGetTopAnimesUserCase()
+            val animes = withContext(Dispatchers.IO){
+                jikan.getResponse()
+            }
+
+            animes.onSuccess { animes ->
+                //Instanciar el adapter
+                val adapter = AnimeAdapter(animes.data)
+                binding.rvUsers.adapter = adapter
+                binding.rvUsers.layoutManager = LinearLayoutManager(this@PrincipalActivity, LinearLayoutManager.VERTICAL, false)
+            }
+
+            animes.onFailure {
+                //Depende de lo que deseen mostrar al usuario
+                //Manejo de errores en la UI
+
+            }
+            binding.animationView.visibility = View.GONE
+        }
+    }
+
     private fun initRecyclerView(){
 
         lifecycleScope.launch(Dispatchers.Main) {
@@ -222,10 +264,14 @@ class PrincipalActivity : AppCompatActivity() {
 
     //Llamado de Casos de Uso
     private  fun getAllTopAnimes(){
+       /*
         lifecycleScope.launch(Dispatchers.IO) {
            val x = JikanGetTopAnimesUserCase().getResponse()
             Log.d(Constants.TAG, x.pagination.toString())
+
         }
+        */
+        binding.animationView.visibility = View.VISIBLE
     }
 
 

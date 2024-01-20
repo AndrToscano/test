@@ -11,10 +11,11 @@ import com.toscano.test.ui.core.Constants
 
 class JikanGetTopAnimesUserCase {
 
-    suspend fun getResponse(): TopAnimes {
+    suspend fun getResponse() : Result<TopAnimes> {
 
-        val result : Result<TopAnimes>
+        var result : Result<TopAnimes>? = null
         var infoAnime = TopAnimes()
+
 
         try {
             val baseService = RetrofitBase.getRetrofitJikanConncetion()
@@ -28,20 +29,21 @@ class JikanGetTopAnimesUserCase {
 
                 val a = callService.body()!!
                 infoAnime = a
-                result = Result.success(a)
+                result = Result.success(infoAnime)
 
             }
 
             else{
                 Log.e(Constants.TAG, "Error al llamado de la API de Jikan")
+                result = Result.failure(Exception("Error al llamado de la API de Jikan"))
             }
         }
 
         catch(ex: Exception) {
             Log.e(Constants.TAG, ex.stackTraceToString())
-            //result = Result.failure()
+            result = Result.failure(Exception(ex))
         }
 
-        return infoAnime
+        return result!!
     }
 }
